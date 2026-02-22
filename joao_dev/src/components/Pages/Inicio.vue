@@ -1,162 +1,94 @@
 <template>
-  <Header @mudarModo="atualizarModo" />
+  <div>
+    <Header @mudarModo="atualizarModo" />
 
-  <section class="hero-section">
-    <div class="overlay"></div>
+    <section class="hero-section">
+      <div class="overlay"></div>
 
-    <div class="apresentacao anima-entrada">
-      <p class="tagline">Desenvolvedor Full-Stack</p>
-      <h1 class="titulo-cores">João Gabriel Pinto Matozinhos</h1>
+      <div class="apresentacao anima-entrada">
+        <p class="tagline">Desenvolvedor Full-Stack</p>
+        <h1 class="titulo-cores">João Gabriel</h1>
 
-      <div class="box-icones">
-        <a href="https://github.com/Joaogb00" class="icones" target="_blank">
-          <i class="bi bi-github"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/joão-gabriel-506031260/" class="icones" target="_blank">
-          <i class="bi bi-linkedin"></i>
-        </a>
-        <a href="https://wa.me/55319XXXXXXXX" class="icones" target="_blank">
-          <i class="bi bi-whatsapp"></i>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <div id="sobre" class="container">
-    <div class="conteudo-sobre-grid anima-entrada-atrasada">
-      
-      <div class="coluna-foto revelar">
-        <div class="foto-moldura">
-          <img src="../../assets/img/diversos/eu.jpg" alt="João Gabriel" class="minha-foto">
-          <div class="detalhe-moldura"></div>
+        <div class="box-icones">
+          <a href="https://github.com/Joaogb00" class="icones" target="_blank">
+            <i class="bi bi-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/joão-gabriel-506031260/" class="icones" target="_blank">
+            <i class="bi bi-linkedin"></i>
+          </a>
+          <a href="https://wa.me/5531991890942" class="icones" target="_blank">
+            <i class="bi bi-whatsapp"></i>
+          </a>
         </div>
       </div>
+    </section>
 
-      <div class="coluna-texto">
-        <h2 class="subtitulo-apresentacao revelar">Quem sou eu</h2>
-        <h1 class="titulo-sobre revelar">SOBRE MIM</h1>
-        <div class="linha-decorativa revelar"></div>
-        
-        <transition name="fade-texto" mode="out-in">
-          <div :key="modoLeigo">
-            <div v-if="!modoLeigo">
-              <p class="descricao-longa">
-                Olá! Sou o <strong>João Gabriel</strong>, um desenvolvedor focado em construir soluções digitais 
-                modernas e eficientes. Unindo lógica de back-end com um olhar apurado para o design no front-end, 
-                entrego interfaces que priorizam a experiência do usuário.
-              </p>
-              <p class="descricao-longa">
-                Atualmente, dedico-me ao ecossistema Full-Stack, explorando tecnologias que permitem criar 
-                sistemas escaláveis, performáticos e visualmente impactantes.
-              </p>
-            </div>
-            
-            <div v-else>
-              <p class="descricao-longa">
-                Olá! Eu sou o <strong>João Gabriel</strong>. Em termos simples: eu construo sites e sistemas que 
-                ajudam empresas a crescerem na internet de forma rápida, segura e bonita.
-              </p>
-              <p class="descricao-longa">
-                Meu foco é transformar suas necessidades em uma ferramenta digital que seja fácil de usar 
-                e que realmente traga resultados para o seu dia a dia.
-              </p>
-            </div>
-          </div>
-        </transition>
-        
-        <div class="tags-habilidades revelar">
-          <span>{{ modoLeigo ? 'Sites Modernos' : 'Vue.js' }}</span>
-          <span>{{ modoLeigo ? 'Sistemas Rápidos' : 'Node.js' }}</span>
-          <span>{{ modoLeigo ? 'Design Intuitivo' : 'UI/UX Design' }}</span>
-          <span>{{ modoLeigo ? 'Soluções Completas' : 'Full-Stack' }}</span>
-        </div>
-      </div>
-    </div>
+  
+
+ <Sobre :modoLeigo="modoLeigo" /> 
+
+    <button 
+      class="btn-topo" 
+      :class="{ 'show': mostrarBotao }" 
+      @click="voltarAoTopo"
+      aria-label="Voltar ao topo"
+    >
+      <i class="bi bi-arrow-up"></i>
+    </button>
   </div>
-
-  <button class="btn-topo" :class="{ 'show': mostrarBotao }" @click="voltarAoTopo">
-    <i class="bi bi-arrow-up"></i>
-  </button>
 </template>
 
 <script>
 import Header from '../Header.vue';
 
+import Sobre from './Sobre.vue';
+
 export default {
   name: 'Inicio',
-  components: { Header },
+  components: { Header,Sobre },
   data() {
     return {
       mostrarBotao: false,
-      modoLeigo: false,
-      observer: null
+      modoLeigo: false
     }
   },
   methods: {
-    atualizarModo(valor) {
-      this.modoLeigo = valor;
-    },
-    handleScroll() {
-      this.mostrarBotao = window.scrollY > 400;
-    },
-    voltarAoTopo() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    },
-    initScrollReveal() {
-      this.observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('ativo');
-          }
-        });
-      }, { threshold: 0.1 });
-
-      document.querySelectorAll('.revelar').forEach((el) => this.observer.observe(el));
-    }
+    atualizarModo(valor) { this.modoLeigo = valor; },
+    voltarAoTopo() { window.scrollTo({ top: 0, behavior: 'smooth' }); },
+    handleScroll() { this.mostrarBotao = window.scrollY > 400; }
   },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll);
-    this.initScrollReveal();
-  },
-  unmounted() {
-    window.removeEventListener('scroll', this.handleScroll);
-    if (this.observer) this.observer.disconnect();
-  }
+  mounted() { window.addEventListener('scroll', this.handleScroll); },
+  unmounted() { window.removeEventListener('scroll', this.handleScroll); }
 }
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+/* --- CONFIGURAÇÕES GERAIS --- */
+:global(html) {
+  scroll-behavior: smooth;
+}
 
-:global(html) { scroll-behavior: smooth; }
-:global(body) { background-color: rgb(15, 15, 15); }
-
-/* --- NOVAS ANIMAÇÕES DE FADE-IN (Baseadas no seu modelo) --- */
+/* --- ANIMAÇÕES DE ENTRADA --- */
 .anima-entrada {
-    animation: fadeInSurgir 1.5s ease-out forwards;
+  animation: fadeInSurgir 1.2s ease-out forwards;
 }
 
 .anima-entrada-atrasada {
-    animation: fadeInSurgir 2s ease-out forwards;
+  animation: fadeInSurgir 1.6s ease-out forwards;
 }
 
 @keyframes fadeInSurgir {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* --- REVELAÇÃO NO SCROLL --- */
 .revelar {
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+  transition: opacity 1s ease-out, transform 1s ease-out;
 }
+
 .revelar.ativo {
   opacity: 1;
   transform: translateY(0);
@@ -165,107 +97,230 @@ export default {
 /* --- HERO SECTION --- */
 .hero-section {
   position: relative;
-  background-color: rgb(15, 15, 15); 
+  background-color: #0f0f0f;
   background-image: url("../../assets/img/fundos/F7.jpg");
   height: 100vh;
   background-size: cover;
   background-position: center;
-  display: flex; justify-content: center; align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .overlay {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.9));
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(15,15,15,1));
 }
 
-.apresentacao { z-index: 2; text-align: center; }
+.apresentacao {
+  z-index: 2;
+  text-align: center;
+}
 
 .tagline {
   color: #00cdfb;
   text-transform: uppercase;
   letter-spacing: 5px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   margin-bottom: 10px;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .titulo-cores {
-  font-size: clamp(2.5rem, 10vw, 5rem);
+  font-size: clamp(2.5rem, 8vw, 5rem);
   font-weight: 900;
-  background: linear-gradient(to right, #4a86c2, #00cdfb, #4d6ff9, #ffffff, #4a86c2);
+  background: linear-gradient(to right, #4a86c2, #00cdfb, #ffffff, #00cdfb, #4a86c2);
   background-size: 200% auto;
-  -webkit-background-clip: text; background-clip: text;
+  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: brilho-suave 5s linear infinite;
+  animation: brilho-suave 6s linear infinite;
 }
 
-@keyframes brilho-suave { to { background-position: 200% center; } }
+@keyframes brilho-suave {
+  to { background-position: 200% center; }
+}
 
-.box-icones { margin-top: 35px; display: flex; justify-content: center; gap: 30px; }
+.box-icones {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
 .icones {
-  font-size: 2.5rem; text-decoration: none;
-  background: linear-gradient(to right, #4a86c2, #00cdfb);
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: 0.4s;
+  font-size: 2.2rem;
+  color: #00cdfb;
+  transition: 0.3s ease;
 }
-.icones:hover { transform: translateY(-8px) scale(1.1); }
 
-/* --- SEÇÃO SOBRE MIM --- */
+.icones:hover {
+  transform: translateY(-5px) scale(1.1);
+  color: #ffffff;
+}
+
+/* --- SEÇÃO SOBRE --- */
 .container {
-  background-color: rgb(15, 15, 15);
-  min-height: 100vh;
-  display: flex; justify-content: center; align-items: center;
-  padding: 100px 20px;
+  background-color: #0f0f0f;
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 24px;
 }
 
 .conteudo-sobre-grid {
-  display: grid; grid-template-columns: 1fr 1.2fr;
-  gap: 80px; max-width: 1100px; width: 100%; align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  max-width: 1100px;
+  width: 100%;
 }
 
-/* Moldura e Foto interativas */
-.foto-moldura { position: relative; width: 100%; max-width: 350px; height: 450px; margin: 0 auto; }
-.minha-foto { 
-  width: 100%; height: 100%; object-fit: cover; border-radius: 20px; z-index: 2; 
-  position: relative; border: 1px solid rgba(255,255,255,0.1);
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
+.foto-moldura {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 3/4;
+  margin: 0 auto;
 }
+
+.minha-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  z-index: 2;
+  position: relative;
+  filter: grayscale(20%);
+  transition: 0.5s ease;
+}
+
 .detalhe-moldura {
-  position: absolute; top: 20px; left: 20px; right: -20px; bottom: -20px;
-  border: 2px solid #00cdfb; border-radius: 20px; z-index: 1; transition: all 0.5s ease;
+  position: absolute;
+  inset: 15px -15px -15px 15px;
+  border: 2px solid #00cdfb;
+  border-radius: 16px;
+  z-index: 1;
+  transition: 0.5s ease;
 }
 
-.foto-moldura:hover .minha-foto { transform: translate(-10px, -10px); box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.5); }
-.foto-moldura:hover .detalhe-moldura { transform: translate(10px, 10px); background: rgba(0, 205, 251, 0.05); }
+.foto-moldura:hover .minha-foto {
+  transform: translate(-8px, -8px);
+  filter: grayscale(0%);
+}
 
-.coluna-texto { color: white; text-align: left; }
-.titulo-sobre { font-size: 3rem; font-weight: 900; margin-bottom: 15px; }
-.subtitulo-apresentacao { color: #00cdfb; letter-spacing: 4px; font-size: 0.9rem; text-transform: uppercase; }
-.linha-decorativa { width: 80px; height: 4px; background: #00cdfb; margin-bottom: 30px; }
-.descricao-longa { color: #b0b0b0; line-height: 1.8; font-size: 1.1rem; margin-bottom: 20px; }
-.descricao-longa strong { color: #00cdfb; }
+.foto-moldura:hover .detalhe-moldura {
+  transform: translate(8px, 8px);
+}
 
-.tags-habilidades { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-.tags-habilidades span { border: 1px solid #00cdfb; color: #00cdfb; padding: 6px 18px; border-radius: 50px; font-size: 0.85rem; }
+.coluna-texto {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-/* Botão Topo */
+.titulo-sobre {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  margin-bottom: 15px;
+}
+
+.subtitulo-apresentacao {
+  color: #00cdfb;
+  letter-spacing: 3px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.linha-decorativa {
+  width: 60px;
+  height: 4px;
+  background: #00cdfb;
+  margin-bottom: 25px;
+}
+
+.descricao-longa {
+  color: #cccccc;
+  line-height: 1.7;
+  font-size: 1.05rem;
+  margin-bottom: 15px;
+}
+
+:deep(.descricao-longa strong) {
+  color: #00cdfb;
+  font-weight: 600;
+}
+
+.tags-habilidades {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.tags-habilidades span {
+  border: 1px solid rgba(0, 205, 251, 0.4);
+  color: #00cdfb;
+  padding: 5px 15px;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  background: rgba(0, 205, 251, 0.05);
+  transition: 0.3s;
+}
+
+.tags-habilidades span:hover {
+  background: #00cdfb;
+  color: #000;
+}
+
+/* BOTÃO VOLTAR AO TOPO */
 .btn-topo {
-  position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
-  background: linear-gradient(45deg, #4a86c2, #00cdfb); color: white; border: none; cursor: pointer; z-index: 2000;
-  display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.4s;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #00cdfb;
+  color: #000;
+  border: none;
+  cursor: pointer;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s;
+  box-shadow: 0 4px 15px rgba(0, 205, 251, 0.3);
 }
-.btn-topo.show { opacity: 1; visibility: visible; transform: translateY(0); }
 
+.btn-topo.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* TRANSIÇÕES DE TEXTO */
+.fade-texto-enter-active, .fade-texto-leave-active {
+  transition: all 0.4s ease;
+}
+.fade-texto-enter-from { opacity: 0; transform: translateY(10px); }
+.fade-texto-leave-to { opacity: 0; transform: translateY(-10px); }
+
+/* RESPONSIVIDADE */
 @media (max-width: 900px) {
-  .conteudo-sobre-grid { grid-template-columns: 1fr; text-align: center; }
-  .coluna-texto { text-align: center; }
-  .linha-decorativa { margin: 0 auto 30px auto; }
+  .conteudo-sobre-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 40px;
+  }
+  .coluna-texto { align-items: center; }
+  .linha-decorativa { margin: 0 auto 25px auto; }
   .tags-habilidades { justify-content: center; }
 }
-
-/* Transição de texto modo leigo */
-.fade-texto-enter-active, .fade-texto-leave-active { transition: all 0.5s ease; }
-.fade-texto-enter-from { opacity: 0; transform: translateX(20px); }
-.fade-texto-leave-to { opacity: 0; transform: translateX(-20px); }
 </style>
