@@ -26,7 +26,7 @@
   
 
  <Sobre :modoLeigo="modoLeigo" /> 
-
+<!-- <Projetos/> -->
     <button 
       class="btn-topo" 
       :class="{ 'show': mostrarBotao }" 
@@ -40,12 +40,13 @@
 
 <script>
 import Header from '../Header.vue';
+import Projetos from './Projetos.vue';
 
 import Sobre from './Sobre.vue';
 
 export default {
   name: 'Inicio',
-  components: { Header,Sobre },
+  components: { Header,Sobre,Projetos },
   data() {
     return {
       mostrarBotao: false,

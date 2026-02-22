@@ -26,7 +26,7 @@
             <h3>{{ projeto.nome }}</h3>
             <p>{{ projeto.descricao }}</p>
             <div class="tech-tags">
-              <span v-for="tech in projeto.tecnologias" :key="tech">{{ tech }}</span>
+              <span  v-for="tech in projeto.tecnologias" :key="tech">{{ tech }}</span>
             </div>
           </div>
         </div>
@@ -38,7 +38,7 @@
 
 <script>
 import img1 from '@/assets/img/projetos/Porjeto-landing.png'
-// import img2 from '@/assets/img/projetos/projeto-mecancia.png'
+import img from '@/assets/img/projetos/projeto-mecanica.png'
 import img3 from '@/assets/img/projetos/projeto-finance.png'
 export default {
   name: 'Projetos',
@@ -56,7 +56,7 @@ export default {
         {
           nome: 'Sistema de Mecanica',
           descricao: 'Dashboard interativo para controle de estoque e fluxo de caixa.',
-          imagem: img2,
+          imagem: img,
           tecnologias: ['PHP', 'JavaScript', 'HTML', 'CSS', 'MySql'],
           github: '#',
           link: '#'
@@ -93,10 +93,13 @@ export default {
 
 <style scoped>
 .sessao-projetos {
-  background-color: rgb(10, 10, 10);
+  background-image:linear-gradient(to bottom, rgba(0, 0, 0, 0.145), rgba(15,15,15,1)), url("../../assets/img/fundos/F10.jpg");
   padding: 100px 20px;
   min-height: 100vh;
   color: white;
+  background-size: cover;
+  background-position: center;
+  
 }
 
 .container-projetos {
