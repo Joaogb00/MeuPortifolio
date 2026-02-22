@@ -55,7 +55,7 @@ export default {
         },
         {
           nome: 'Sistema de Mecanica',
-          descricao: 'Dashboard interativo para controle de estoque e fluxo de caixa.',
+          descricao: 'Dashboard interativo para controle de demanda da mecanica.',
           imagem: img,
           tecnologias: ['PHP', 'JavaScript', 'HTML', 'CSS', 'MySql'],
           github: '#',

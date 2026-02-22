@@ -26,7 +26,7 @@
   
 
  <Sobre :modoLeigo="modoLeigo" /> 
-<!-- <Projetos/> -->
+<Projetos/>
     <button 
       class="btn-topo" 
       :class="{ 'show': mostrarBotao }" 
